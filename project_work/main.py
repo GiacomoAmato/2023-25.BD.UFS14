@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import PyPDF2
 import re
-
+import json
 def fetch_ingredient_data(url):
     # Prima richiesta
     response1 = requests.get(url + "FetchCIRReports/")
@@ -14,7 +14,8 @@ def fetch_ingredient_data(url):
     response2 = requests.get(response1.url + "?&pagingcookie=" + cookie)
     response2.raise_for_status()
     documento2 = response2.json()["results"]
-
+    with open("ingredienti.json", "w") as file:
+        json.dump(documento1[:5], file, indent = 4) 
     return documento1 + documento2
 
 def find_and_extract_report(ingredienti, ingrediente_richiesto, url_base):
