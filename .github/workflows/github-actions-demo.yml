@@ -5,13 +5,29 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v5
+
+    - name: check out repository 
+      uses: actions/checkout@v4
+
+    - name: list file 
+      run: |
+        is -R $({github.workspace})
+
+    - name: set up
+      uses: actions/setup-python@v5
       with:
         python-version: '3.12'
-    - run: ls -la
-    - run: python --version
-    - run: uname -a
-    - run: pip install -U pytest
-    - run: pip install -r project_work/requirements.pjw.txt
-    - run: pytest
+    - name: insatll dependence
+      run: |
+      pip install -U pytest
+      pip install -r project_work/requirements.pjw.txt
+
+    - name: list file pj
+      run: |
+      cd project_work
+      is -R
+
+    - name: run test
+      run: |
+      cd  projectwork
+      pytest .
