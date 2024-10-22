@@ -9,7 +9,8 @@
 			"installTools": true,
 			"version": "3.12"
 		},
-		"ghcr.io/astronomer/devcontainer/features/azure-cli:1":{}
+		"ghcr.io/devcontainers/features/azure-cli:1": {}
+	
 },
 	"customizations": {
 		"vscode": {
