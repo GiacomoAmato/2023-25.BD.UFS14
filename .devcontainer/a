@@ -1,3 +1,5 @@
+az login --use-device-code
+
 export AZURE_RESOURCE_GROUP=`az group list | jq -r ".[].name"`
 echo "Il tuo AZURE_RESOURCE_GROUP e' il seguente ${AZURE_RESOURCE_GROUP}"
 

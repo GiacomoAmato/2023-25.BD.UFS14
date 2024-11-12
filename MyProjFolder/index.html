@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Seleziona la Frequenza dei Ritorni</h1>
-    <form action="/?frequency" method="get">
+    <form id="frequencyForm">
         <label for="frequency">Scegli la frequenza:</label>
         <select name="frequency" id="frequency">
             <option value="daily">Daily</option>
@@ -16,5 +16,33 @@
         </select>
         <button type="submit">Invia</button>
     </form>
+
+    <h2>Grafico dei Ritorni</h2>
+    <div id="chartContainer">
+        <!-- L'immagine del grafico sarà inserita qui -->
+        <img id="chartImage" src="" alt="Grafico dei Ritorni" style="display: none;">
+    </div>
+
+    <script>
+        document.getElementById("frequencyForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Impedisce il ricaricamento della pagina
+
+            // Ottiene il valore selezionato per la frequenza
+            const frequency = document.getElementById("frequency").value;
+
+            // Effettua una richiesta AJAX per ottenere il grafico
+            fetch(`/api/index.html?frequency=${frequency}`)
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = URL.createObjectURL(blob);
+                    const chartImage = document.getElementById("chartImage");
+                    chartImage.src = url;
+                    chartImage.style.display = "block";
+                })
+                .catch(error => {
+                    console.error("Errore nel caricare il grafico:", error);
+                });
+        });
+    </script>
 </body>
 </html>
