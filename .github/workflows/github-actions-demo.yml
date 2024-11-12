@@ -3,31 +3,15 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
   Explore-GitHub-Actions:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
-
-    - name: check out repository 
-      uses: actions/checkout@v4
-
-    - name: list file 
-      run: |
-        ls -R $({github.workspace})
-
-    - name: set up
-      uses: actions/setup-python@v5
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
       with:
         python-version: '3.12'
-    - name: install dependencies
-      run: |
-      pip install -U pytest
-      pip install -r project_work/requirements.pjw.txt
-
-    - name: list file pj
-      run: |
-      cd project_work
-      ls -R
-
-    - name: run test
-      run: |
-      cd  projectwork
-      pytest .
+    - run: python --version
+    - run: uname -a
+    - run: pip install --upgrade pip
+    - run: pip install -U pytest
+    - run: pip install -r MyProjFolder/tests/requirements.txt
+    - run: pytest
