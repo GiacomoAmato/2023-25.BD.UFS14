@@ -8,8 +8,7 @@ def test_http_example_file_not_found():
     
     if not os.path.exists(csv_path):
         with open(csv_path, 'w') as f:
-            f.write('date,close\n2023-01-01,100\n2023-01-02,101\n')  # Dati di prova
-
+            f.write('date,close\n2023-01-01,100\n2023-01-02,101\n')  
     os.rename(csv_path, csv_path + "_backup")
     
     req = func.HttpRequest(

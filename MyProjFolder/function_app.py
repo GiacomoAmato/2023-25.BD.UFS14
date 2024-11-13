@@ -5,14 +5,12 @@ import matplotlib.pyplot as plt
 import io
 import os
 
-# Inizializza l'app Azure Functions
 app = func.FunctionApp()
 
 @app.route(route="index.html", auth_level=func.AuthLevel.ANONYMOUS)
 def HttpExample(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    # Recupera il parametro 'frequency' dalla richiesta
     frequency = req.params.get('frequency')
     if not frequency:
         try:
@@ -45,10 +43,9 @@ def HttpExample(req: func.HttpRequest) -> func.HttpResponse:
                 logging.error("Il file CSV non contiene le colonne richieste ('date' e 'close').")
                 return func.HttpResponse("Il file CSV non contiene le colonne richieste ('date' e 'close').", status_code=500)
 
-            # Calcolo dei ritorni in base alla frequenza
             if frequency == 'daily':
                 df['Return'] = df['close'].pct_change()
-                # Prendi solo ogni 5 giorni per ridurre il numero di punti
+               
                 df = df[::5]
             elif frequency == 'monthly':
                 df['date'] = pd.to_datetime(df['date'])
@@ -61,7 +58,6 @@ def HttpExample(req: func.HttpRequest) -> func.HttpResponse:
                 df = df.resample('A').last()
                 df['Return'] = df['close'].pct_change()
 
-            # Genera il grafico dei ritorni
             plt.figure(figsize=(10, 5))
             plt.plot(df.index, df['Return'],  linestyle='-', linewidth=0.5)
             plt.title(f'Returns - {frequency.capitalize()}')
@@ -69,11 +65,9 @@ def HttpExample(req: func.HttpRequest) -> func.HttpResponse:
             plt.ylabel('Returns')
             plt.grid()
 
-            # Migliora la leggibilità delle date sull'asse x
             plt.xticks(rotation=45)
             plt.tight_layout()
 
-            # Salva il grafico in un buffer di memoria
             buf = io.BytesIO()
             plt.savefig(buf, format='png')
             plt.close()
