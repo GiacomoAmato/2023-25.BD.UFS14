@@ -3,6 +3,7 @@ import pandas as pd
 import json
 from main import generate_plot
 from snapshottest import Snapshot
+import base64
 
 def test_generate_plot_snapshot(snapshot):
 
@@ -15,6 +16,5 @@ def test_generate_plot_snapshot(snapshot):
     plot_image = generate_plot(df, 'daily')
     assert plot_image is not None, "La funzione dovrebbe restituire un'immagine"
 
-    import base64
     image_base64 = base64.b64encode(plot_image).decode('utf-8')
     snapshot.assert_match(image_base64)
