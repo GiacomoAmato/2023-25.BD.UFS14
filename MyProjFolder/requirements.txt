@@ -9,4 +9,3 @@ pytest
 jsonschema
 requests
 snapshottest
-base64
