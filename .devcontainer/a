@@ -1,6 +1,6 @@
 az login --use-device-code
 
-export AZURE_RESOURCE_GROUP=`az group list | jq -r ".[].name"`
+export AZURE_RESOURCE_GROUP=az group list | jq -r ".[].name"
 echo "Il tuo AZURE_RESOURCE_GROUP e' il seguente ${AZURE_RESOURCE_GROUP}"
 
 export COGNOME=amato
@@ -16,3 +16,11 @@ az storage account create --name $AZURE_FUNCTION_STORAGE_ACCOUNT_NAME --location
 
 
 az functionapp create --resource-group $AZURE_RESOURCE_GROUP --consumption-plan-location westeurope --runtime python --runtime-version 3.10 --functions-version 4 --name $AZURE_FUNCTION_APP_NAME --os-type linux --storage-account $AZURE_FUNCTION_STORAGE_ACCOUNT_NAME
+
+cd MyProjFolder
+
+source .venv/bin/activate
+
+func azure functionapp publish $AZURE_FUNCTION_APP_NAME
+
+func start

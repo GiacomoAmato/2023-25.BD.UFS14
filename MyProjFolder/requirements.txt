@@ -5,3 +5,6 @@
 azure-functions
 pandas
 matplotlib
+pytest
+jsonschema
+requests

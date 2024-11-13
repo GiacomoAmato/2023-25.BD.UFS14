@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 import io
 import os
 
+
+# Inizializza l'app Azure Functions
+app = func.FunctionApp()
 def load_html():
     try:
         html_path = os.path.join(os.path.dirname(__file__), 'index.html')
